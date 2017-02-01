@@ -4,7 +4,7 @@ This is a quick-start base for java projects with Spring Boot, MongoDB and confi
 ### Running
 * Download this base
 * Start the MongoDB service/daemon in your system 
-* Run project by `Application.class` or by `mvn clean install`, `java -jar target/*.jar`.
+* Run project by `Application.class` or by `mvn clean install`, `java -jar target/*.jar`, or by `mvn spring-boot:run`
 
 ---
 ### JWT security
