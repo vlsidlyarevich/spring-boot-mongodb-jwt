@@ -15,7 +15,7 @@ Page `http://localhost:8080/api/hello` is secured. To access this page, you need
   username: "user",
   password: "12345"
 ```
-* **GET** request to `http://localhost:8080/api/auth`, then take token from responce and use it in header to access secured page
+* **POST** request to `http://localhost:8080/api/auth`, then take token from responce and use it in header to access secured page
 * **GET** request to `http://localhost:8080/api/hello` with header:
 ```json
   x-auth-token: <your token here>
