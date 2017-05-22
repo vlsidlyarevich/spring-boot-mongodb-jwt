@@ -1,40 +1,43 @@
-package com.github.vlsidlyarevich.security.service.impl;
+package com.github.vlsidlyarevich.security.service;
 
 import com.github.vlsidlyarevich.exception.model.UserNotFoundException;
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.model.UserAuthentication;
 import com.github.vlsidlyarevich.security.constants.SecurityConstants;
-import com.github.vlsidlyarevich.security.service.TokenAuthenticationService;
-import com.github.vlsidlyarevich.security.service.TokenService;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 @Service
-public class TokenAuthenticationServiceImpl implements TokenAuthenticationService {
+public class JsonWebTokenAuthenticationService implements TokenAuthenticationService {
 
     @Value("security.token.secret.key")
     private String secretKey;
 
-    @Autowired
-    private TokenService tokenService;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    public JsonWebTokenAuthenticationService(final UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
-    public Authentication authenticate(HttpServletRequest request) {
-        String token = request.getHeader(SecurityConstants.AUTH_HEADER_NAME);
-        Jws<Claims> tokenData = parseToken(token);
+    public Authentication authenticate(final HttpServletRequest request) {
+        final String token = request.getHeader(SecurityConstants.AUTH_HEADER_NAME);
+        final Jws<Claims> tokenData = parseToken(token);
         if (tokenData != null) {
             User user = getUserFromToken(tokenData);
             if (user != null) {
@@ -44,13 +47,7 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
         return null;
     }
 
-    @Override
-    public void addAuthentication(HttpServletResponse response, UserDetails userDetails) {
-        final User user = (User) userDetails;
-        response.addHeader(SecurityConstants.AUTH_HEADER_NAME, tokenService.getToken(user.getUsername(), user.getPassword()));
-    }
-
-    private Jws<Claims> parseToken(String token) {
+    private Jws<Claims> parseToken(final String token) {
         if (token != null) {
             try {
                 return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
@@ -62,11 +59,13 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
         return null;
     }
 
-    private User getUserFromToken(Jws<Claims> tokenData) {
+    private User getUserFromToken(final Jws<Claims> tokenData) {
         try {
-            return (User) userDetailsService.loadUserByUsername(tokenData.getBody().get("username").toString());
+            return (User) userDetailsService
+                    .loadUserByUsername(tokenData.getBody().get("username").toString());
         } catch (UsernameNotFoundException e) {
-            throw new UserNotFoundException("User " + tokenData.getBody().get("username").toString() + " not found");
+            throw new UserNotFoundException("User "
+                    + tokenData.getBody().get("username").toString() + " not found");
         }
     }
 }

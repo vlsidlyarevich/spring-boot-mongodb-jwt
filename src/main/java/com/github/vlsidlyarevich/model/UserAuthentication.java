@@ -6,12 +6,14 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 
 
-public class UserAuthentication implements Authentication{
+public class UserAuthentication implements Authentication {
+
+    private static final long serialVersionUID = -7170337143687707450L;
 
     private final User user;
     private boolean authenticated = true;
 
-    public UserAuthentication(User user) {
+    public UserAuthentication(final User user) {
         this.user = user;
     }
 
@@ -41,7 +43,7 @@ public class UserAuthentication implements Authentication{
     }
 
     @Override
-    public void setAuthenticated(boolean authenticated) throws IllegalArgumentException {
+    public void setAuthenticated(final boolean authenticated) throws IllegalArgumentException {
         this.authenticated = authenticated;
     }
 

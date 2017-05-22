@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/signup")
 public class SignUpController {
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
+
+    private final ConverterFacade converterFacade;
 
     @Autowired
-    private ConverterFacade converterFacade;
+    public SignUpController(final UserService service,
+                            final ConverterFacade converterFacade) {
+        this.service = service;
+        this.converterFacade = converterFacade;
+    }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> signUp(@RequestBody UserDTO dto) {
+    public ResponseEntity<?> signUp(@RequestBody final UserDTO dto) {
         return new ResponseEntity<>(service.create(converterFacade.convert(dto)), HttpStatus.OK);
     }
 }

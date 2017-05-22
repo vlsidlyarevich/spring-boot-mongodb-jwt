@@ -9,6 +9,8 @@ import java.util.List;
 
 public class User extends BaseEntity implements UserDetails {
 
+    private static final long serialVersionUID = 7954325925563724664L;
+
     private List<Authority> authorities;
     private String username;
     private String password;
@@ -52,31 +54,31 @@ public class User extends BaseEntity implements UserDetails {
         return isEnabled;
     }
 
-    public void setAuthorities(List<Authority> authorities) {
+    public void setAuthorities(final List<Authority> authorities) {
         this.authorities = authorities;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
+    public void setAccountNonExpired(final boolean accountNonExpired) {
         this.accountNonExpired = accountNonExpired;
     }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
+    public void setAccountNonLocked(final boolean accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
     }
 
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+    public void setCredentialsNonExpired(final boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         isEnabled = enabled;
     }
 }

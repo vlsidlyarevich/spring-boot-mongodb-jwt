@@ -1,8 +1,7 @@
-package com.github.vlsidlyarevich.security.service.impl;
+package com.github.vlsidlyarevich.security.service;
 
 import com.github.vlsidlyarevich.exception.model.ServiceException;
 import com.github.vlsidlyarevich.model.User;
-import com.github.vlsidlyarevich.security.service.TokenService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,19 +17,24 @@ import java.util.Map;
 
 
 @Service
-public class TokenServiceImpl implements TokenService {
+public class JsonWebTokenService implements TokenService {
 
     @Value("security.token.secret.key")
     private String tokenKey;
 
+    private final UserDetailsService userDetailsService;
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    public JsonWebTokenService(final UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
-    public String getToken(String username, String password) {
-        if (username == null || password == null)
+    public String getToken(final String username, final String password) {
+        if (username == null || password == null) {
             return null;
-        User user = (User) userDetailsService.loadUserByUsername(username);
+        }
+        final User user = (User) userDetailsService.loadUserByUsername(username);
         Map<String, Object> tokenData = new HashMap<>();
         if (password.equals(user.getPassword())) {
             tokenData.put("clientType", "user");

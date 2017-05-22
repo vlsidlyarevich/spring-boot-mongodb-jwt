@@ -15,7 +15,7 @@ public class ConverterFactory {
 
     private Map<Object, Converter> converters;
 
-    public void ConverterFactory() {
+    public ConverterFactory() {
 
     }
 
@@ -25,7 +25,7 @@ public class ConverterFactory {
         converters.put(UserDTO.class, new UserDTOConverter());
     }
 
-    public Converter getConverter(Object type) {
+    public Converter getConverter(final Object type) {
         return converters.get(type);
     }
 }

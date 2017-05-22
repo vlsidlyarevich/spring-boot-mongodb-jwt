@@ -13,7 +13,7 @@ public class ConverterFacade {
     @Autowired
     private ConverterFactory converterFactory;
 
-    public User convert(UserDTO dto){
+    public User convert(final UserDTO dto) {
         return (User) converterFactory.getConverter(dto.getClass()).convert(dto);
     }
 }

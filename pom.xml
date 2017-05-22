@@ -17,6 +17,13 @@
     </parent>
 
     <properties>
+        <jjwt.version>0.7.0</jjwt.version>
+        <commons-collections4.version>4.1</commons-collections4.version>
+        <commons-lang3.version>3.5</commons-lang3.version>
+        <guava.version>21.0</guava.version>
+        <maven-pmd-plugin.version>3.8</maven-pmd-plugin.version>
+        <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+        <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -67,7 +74,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.7.0</version>
+            <version>${jjwt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -77,17 +84,17 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.1</version>
+            <version>${commons-collections4.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>21.0</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -112,7 +119,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -126,6 +133,44 @@
                 <configuration>
                     <skipTests>${skip.test}</skipTests>
                 </configuration>
+            </plugin>
+
+            <!--PMD-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven-pmd-plugin.version}</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>build-tools/quality/pmd/pmd-ruleset.xml</ruleset>
+                    </rulesets>
+                    <printFailingErrors>true</printFailingErrors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--Checkstyle-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <configuration>
+                    <configLocation>build-tools/quality/checkstyle/checkstyle.xml</configLocation>
+                    <suppressionsLocation>build-tools/quality/checkstyle/checkstyle-suppress.xml</suppressionsLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -1,6 +1,5 @@
 package com.github.vlsidlyarevich.converter.dto;
 
-
 import com.github.vlsidlyarevich.dto.UserDTO;
 import com.github.vlsidlyarevich.model.Authority;
 import com.github.vlsidlyarevich.model.User;
@@ -13,8 +12,8 @@ import java.util.List;
 public class UserDTOConverter implements Converter<UserDTO, User> {
 
     @Override
-    public User convert(UserDTO dto) {
-        User user = new User();
+    public User convert(final UserDTO dto) {
+        final User user = new User();
 
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
@@ -22,9 +21,8 @@ public class UserDTOConverter implements Converter<UserDTO, User> {
         user.setCredentialsNonExpired(false);
         user.setEnabled(true);
 
-        List<Authority> authorities = new ArrayList() {{
-            add(Authority.ROLE_USER);
-        }};
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(Authority.ROLE_USER);
         user.setAuthorities(authorities);
         return user;
     }

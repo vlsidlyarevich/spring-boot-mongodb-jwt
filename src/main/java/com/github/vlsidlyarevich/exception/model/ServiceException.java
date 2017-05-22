@@ -7,17 +7,18 @@ public class ServiceException extends RuntimeException {
 
     private String service;
 
-    public ServiceException(String service) {
+    public ServiceException(final String service) {
         super();
         this.service = service;
     }
 
-    public ServiceException(String message, String service) {
+    public ServiceException(final String message, final String service) {
         super(message);
         this.service = service;
     }
 
-    public ServiceException(String message, Throwable cause, String service) {
+    public ServiceException(final String message, final Throwable cause,
+                            final String service) {
         super(message, cause);
         this.service = service;
     }
@@ -26,7 +27,7 @@ public class ServiceException extends RuntimeException {
         return service;
     }
 
-    public void setService(String service) {
+    public void setService(final String service) {
         this.service = service;
     }
 }

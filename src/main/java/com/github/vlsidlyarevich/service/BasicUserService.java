@@ -1,8 +1,7 @@
-package com.github.vlsidlyarevich.service.impl;
+package com.github.vlsidlyarevich.service;
 
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.repository.UserRepository;
-import com.github.vlsidlyarevich.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,24 +10,28 @@ import java.util.List;
 
 
 @Service
-public class UserServiceImpl implements UserService {
+public class BasicUserService implements UserService {
+
+    private final UserRepository repository;
 
     @Autowired
-    private UserRepository repository;
+    public BasicUserService(final UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
-    public User create(User user) {
+    public User create(final User user) {
         user.setCreatedAt(String.valueOf(LocalDateTime.now()));
         return repository.save(user);
     }
 
     @Override
-    public User find(String id) {
+    public User find(final String id) {
         return repository.findOne(id);
     }
 
     @Override
-    public User findByUsername(String userName) {
+    public User findByUsername(final String userName) {
         return repository.findByUsername(userName);
     }
 
@@ -38,10 +41,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(String id, User user) {
+    public User update(final String id, final User user) {
         user.setId(id);
 
-        User saved = repository.findOne(id);
+        final User saved = repository.findOne(id);
 
         if (saved != null) {
             user.setCreatedAt(saved.getCreatedAt());
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String delete(String id) {
+    public String delete(final String id) {
         repository.delete(id);
         return id;
     }

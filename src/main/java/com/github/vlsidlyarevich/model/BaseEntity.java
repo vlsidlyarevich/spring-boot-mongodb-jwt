@@ -9,6 +9,8 @@ import java.io.Serializable;
 @Document
 public class BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = 8571261118900116242L;
+
     @Id
     private String id;
     private String createdAt;
@@ -21,7 +23,7 @@ public class BaseEntity implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -29,7 +31,7 @@ public class BaseEntity implements Serializable {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(final String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -37,7 +39,7 @@ public class BaseEntity implements Serializable {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(final String updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

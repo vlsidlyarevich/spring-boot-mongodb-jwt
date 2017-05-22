@@ -1,4 +1,4 @@
-package com.github.vlsidlyarevich.security.service.impl;
+package com.github.vlsidlyarevich.security.service;
 
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.service.UserService;
@@ -10,14 +10,18 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class BasicUserDetailsService implements UserDetailsService {
+
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public BasicUserDetailsService(final UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUsername(username);
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        final User user = userService.findByUsername(username);
         if (user != null) {
             return user;
         } else {

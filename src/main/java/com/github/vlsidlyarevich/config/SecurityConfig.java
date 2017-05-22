@@ -16,28 +16,30 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private TokenAuthenticationService tokenAuthenticationService;
+    private final TokenAuthenticationService tokenAuthenticationService;
 
-    protected SecurityConfig() {
+    @Autowired
+    protected SecurityConfig(final TokenAuthenticationService tokenAuthenticationService) {
         super();
+        this.tokenAuthenticationService = tokenAuthenticationService;
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/api/auth").permitAll()
                 .antMatchers("/api/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),
+                        UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         super.configure(auth);
     }
 

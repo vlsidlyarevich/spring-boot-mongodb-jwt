@@ -16,14 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
+    private final TokenService tokenService;
+
     @Autowired
-    private TokenService tokenService;
+    public AuthenticationController(final TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> authenticate(@RequestBody LoginDTO dto) {
-        String token = tokenService.getToken(dto.getUsername(), dto.getPassword());
+    public ResponseEntity<?> authenticate(@RequestBody final LoginDTO dto) {
+        final String token = tokenService.getToken(dto.getUsername(), dto.getPassword());
         if (token != null) {
-            TokenDTO response = new TokenDTO();
+            final TokenDTO response = new TokenDTO();
             response.setToken(token);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {

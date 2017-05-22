@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable {
 
+    private static final long serialVersionUID = 91901774547107674L;
+
     private String username;
     private String password;
 
@@ -15,7 +17,7 @@ public class UserDTO implements Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
@@ -23,7 +25,7 @@ public class UserDTO implements Serializable {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 }
