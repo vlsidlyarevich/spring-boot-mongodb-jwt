@@ -6,7 +6,7 @@
     <groupId>com.github.vlsidlyarevich</groupId>
     <artifactId>spring-boot-mongodb-jwt</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>Spring-Boot-MongoDB-JWT</name>
     <description>Base for Spring Boot projects with MongoDB and JWT authentication</description>
 
@@ -17,6 +17,7 @@
     </parent>
 
     <properties>
+        <start-class>com.github.vlsidlyarevich.Application</start-class>
         <jjwt.version>0.7.0</jjwt.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <commons-lang3.version>3.5</commons-lang3.version>
@@ -115,6 +116,12 @@
 
     <build>
         <plugins>
+            <!--Spring Boot plugin-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
             <!--Compiler plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
