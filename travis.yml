@@ -1,0 +1,7 @@
+language: java
+jdk: oraclejdk8
+services: mongodb
+before_install:
+  - mvn -N io.takari:maven:wrapper
+after_success:
+  - mvn spring-boot:run
