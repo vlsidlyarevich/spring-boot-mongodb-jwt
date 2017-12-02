@@ -1,5 +1,7 @@
 # Spring-Boot-MongoDB-JWT
+[![Build Status](https://travis-ci.org/vlsidlyarevich/Spring-Boot-MongoDB-JWT.svg?branch=master)](https://travis-ci.org/vlsidlyarevich/Spring-Boot-MongoDB-JWT)
 ### Spring Boot base for projects with MongoDB and JWT based security.
+---
 This is a quick-start base for java projects with Spring Boot, MongoDB and configured JWT security.
 ### Running
 * Download this base
