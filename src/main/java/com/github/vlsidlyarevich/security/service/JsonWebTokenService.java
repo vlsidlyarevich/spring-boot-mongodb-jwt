@@ -21,7 +21,7 @@ public class JsonWebTokenService implements TokenService {
 
     private static int tokenExpirationTime = 30;
 
-    @Value("security.token.secret.key")
+    @Value("${security.token.secret.key}")
     private String tokenKey;
 
     private final UserDetailsService userDetailsService;
