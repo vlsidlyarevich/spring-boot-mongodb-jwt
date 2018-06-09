@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class JsonWebTokenAuthenticationService implements TokenAuthenticationService {
 
-    @Value("security.token.secret.key")
+    @Value("${security.token.secret.key}")
     private String secretKey;
 
     private final UserDetailsService userDetailsService;
